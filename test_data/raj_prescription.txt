@@ -1,0 +1,18 @@
+Patient: Raj Sharma
+Date: 26 August 2026
+Doctor: Dr. Meera Kapoor
+Specialty: Cardiology
+
+Prescription
+
+Amlodipine 5 mg - once daily
+Atorvastatin 20 mg - once daily at night
+
+Investigations before next review:
+CBC
+Lipid Profile
+
+Follow-up:
+Review after 4 weeks.
+
+This document contains synthetic data created for testing.

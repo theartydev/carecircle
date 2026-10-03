@@ -1,0 +1,12 @@
+SYNTHETIC DEMO PRESCRIPTION — FOR SOFTWARE TESTING ONLY
+Patient: Raj Sharma
+Document date: 3 October 2026
+Doctor: Dr. Kavya Rao
+Specialty: Cardiology
+Prescribed medicines:
+Amlodipine 5 mg once daily
+Atorvastatin 20 mg once daily at night
+Requested tests before review:
+CBC
+Lipid Profile
+Follow-up: Review after 7 days.

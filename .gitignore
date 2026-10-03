@@ -1,0 +1,8 @@
+.DS_Store
+.kiro/
+__pycache__/
+*.pyc
+*.zip
+*-response.json
+worker-check-response.json
+instructions.rtf

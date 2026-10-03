@@ -1,0 +1,13 @@
+Patient: Raj Sharma
+Date: 30 August 2026
+Doctor: Dr. Meera Kapoor
+Specialty: Cardiology
+
+Prescription
+
+Amlodipine 5 mg - once daily
+
+Follow-up:
+Review next month.
+
+This document contains synthetic data created for testing.
