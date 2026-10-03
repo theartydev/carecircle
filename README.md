@@ -121,28 +121,24 @@ The diagram is also available in [assets/architecture.md](assets/architecture.md
 
 ---
 
-## Built With Kiro
+## Built With Codex and AWS Agent Toolkit
 
-Kiro — Amazon's AI development environment — was used throughout this build
-with its AWS MCP integration giving it direct access to AWS APIs.
+Codex was the coding assistant used to build and ship CareCircle. AWS Agent
+Toolkit configured Codex with AWS skills and the AWS MCP Server using the
+`family-care-agent` AWS profile.
 
-- Connected to the AWS account through AWS MCP and confirmed the active IAM
-  identity (`family-care-agent-dev`) before any work began.
-- Inspected the existing project structure, existing Python dependencies, and
-  prior Lambda smoke test to understand what could be reused.
-- Implemented the `app_web.py` Lambda web handler — the HTML dashboard,
-  routing, CORS handling, and the `POST /analyze` endpoint.
-- Implemented the Bedrock prescription-analysis integration using direct
-  `boto3` Bedrock Runtime calls (no additional packaging required), reusing
-  the extraction system prompt from the existing `test_extraction.py` proof
-  of concept.
-- Implemented `appointment_worker.py`, the proactive appointment-preparation
-  worker, reusing the preparation-window logic from `test_autonomous.py`.
-- Iterated on deployment: advised on Lambda timeout, IAM permissions, and
-  environment variable configuration as issues arose.
+- Developed the family care dashboard, prescription analysis flow, follow-up
+  confirmation, S3 source storage, DynamoDB persistence, and the scheduled
+  preparation worker.
+- Helped diagnose and test Lambda, DynamoDB, EventBridge Scheduler, SNS, and
+  S3 integration issues during development.
+- Verified the deployed `family-care-web` Lambda through Codex's native AWS MCP
+  connection using a read-only `GetFunctionConfiguration` call in `us-east-1`.
 
-Kiro assisted with implementation and provided deployment guidance. Terminal
-deployment commands (zip, AWS CLI, Lambda updates) were run by the developer.
+The connection evidence is included at
+[`assets/codex-aws-connection-evidence.json`](assets/codex-aws-connection-evidence.json)
+and [`assets/codex-fetching-aws-connection.png`](assets/codex-fetching-aws-connection.png).
+AWS deployment commands were run by the developer.
 
 ---
 
