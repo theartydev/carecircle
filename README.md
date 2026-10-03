@@ -77,50 +77,31 @@ The proactive worker ran on 2 October 2026, confirmed `notification_sent: true`,
 
 ## Architecture
 
-```
-                  ┌──────────────────────────────────┐
-                  │         family-care-web           │
- Browser ────────▶│  AWS Lambda Function URL          │
-                  │  GET /   → HTML dashboard         │
-                  │  GET /health → JSON health        │
-                  │  POST /analyze → Bedrock call     │
-                  └──────────────┬───────────────────┘
-                                 │
-                                 ▼
-                  ┌──────────────────────────────────┐
-                  │     Amazon Bedrock                │
-                  │     Amazon Nova Pro               │
-                  │     (amazon.nova-pro-v1:0)        │
-                  │     us-east-1                     │
-                  └──────────────────────────────────┘
-
- EventBridge ────▶┌──────────────────────────────────┐
- Scheduler        │  family-care-appointment-worker   │
-                  │  AWS Lambda                       │
-                  │  Checks preparation window        │
-                  │  Identifies missing items         │
-                  └──────────────┬───────────────────┘
-                                 │
-                                 ▼
-                  ┌──────────────────────────────────┐
-                  │         Amazon SNS               │
-                  │  Caregiver notification topic     │
-                  └──────────────────────────────────┘
+```mermaid
+flowchart LR
+    U[Family caregiver] -->|HTTPS| W[CareCircle web\nAWS Lambda Function URL]
+    W -->|extract documented fields| B[Amazon Bedrock\nAmazon Nova Pro]
+    W -->|save family care state| D[(Amazon DynamoDB\nfamily-care-state)]
+    W -->|save original synthetic prescription privately| S[(Amazon S3\ncarecircle-documents)]
+    E[Amazon EventBridge Scheduler\n8:00 AM Asia/Calcutta] --> A[Appointment worker\nAWS Lambda]
+    A -->|read confirmed follow-up\nand requested items| D
+    A -->|preparation notification| N[Amazon SNS\nCaregiver email]
+    C[Codex + AWS MCP] -.->|read-only resource verification| W
 ```
 
 **Data flow:**
 
 1. User visits the Lambda Function URL → receives the HTML dashboard.
-2. User submits prescription text → Lambda calls Bedrock Converse API with
-   `amazon.nova-pro-v1:0` → structured JSON returned → displayed in the UI.
+2. The caregiver selects a family member and submits pasted text or a synthetic
+   `.txt` prescription. The web Lambda saves the original privately in S3,
+   calls Bedrock Converse API with `amazon.nova-pro-v1:0`, and saves the
+   structured care state in DynamoDB.
 3. Amazon EventBridge Scheduler runs the appointment check daily at 8:00 AM IST.
-   When the appointment is within the 7-day preparation window, the worker checks
-   the synthetic documented requirements, compares them with the synthetic
-   document-availability state, and publishes the preparation summary to Amazon SNS.
+   When a confirmed follow-up is within the 7-day preparation window, the worker
+   reads DynamoDB, compares requested items with documented availability, and
+   publishes one deduplicated preparation summary to Amazon SNS.
 
-> **Prototype limitation:** Notification history is not persisted in the current
-> MVP, so the scheduled check can send another notification on subsequent daily
-> runs while the appointment remains within the preparation window.
+The diagram is also available in [assets/architecture.md](assets/architecture.md).
 
 ---
 

@@ -1,8 +1,0 @@
-SYNTHETIC DEMO PRESCRIPTION — FOR SOFTWARE TESTING ONLY
-Patient: Nisha Mehta
-Document date: 3 October 2026
-Doctor: Dr. Sameer Joshi
-Specialty: General Medicine
-Requested tests before review:
-CBC
-Follow-up: Review after 5 days.
