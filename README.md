@@ -214,3 +214,14 @@ CareCircle is a hackathon prototype built with synthetic data. It is not
 intended for medical diagnosis, treatment decisions, or real patient data. All
 prescription and patient information shown is fictional and was created solely
 for demonstration purposes.
+
+## Product Screenshots
+
+### Family overview
+![CareCircle family overview](assets/CareCircle-LandingPage.png)
+
+### Prescription analysis
+![CareCircle prescription analysis](assets/AnalysePrescription.png)
+
+### Add a family member
+![Add a CareCircle family member](assets/AddFamilyMember.png)
